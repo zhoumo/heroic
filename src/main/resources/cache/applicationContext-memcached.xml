@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+	<bean id="memCachedPool" class="com.whalin.MemCached.SockIOPool" factory-method="getInstance" init-method="initialize"
+		lazy-init="false" destroy-method="shutDown">
+		<constructor-arg>
+			<value>memCachedPool</value>
+		</constructor-arg>
+		<property name="servers">
+			<list>
+				<value>${memcached.server}</value>
+			</list>
+		</property>
+		<property name="initConn" value="${memcached.initConn}" />
+		<property name="minConn" value="${memcached.minConn}" />
+		<property name="maxConn" value="${memcached.maxConn}" />
+		<property name="maintSleep" value="${memcached.maintSleep}" />
+		<property name="socketTO" value="${memcached.socketTO}" />
+	</bean>
+	<bean id="memCachedClient" class="com.whalin.MemCached.MemCachedClient">
+		<constructor-arg>
+			<value>memCachedPool</value>
+		</constructor-arg>
+	</bean>
+</beans>

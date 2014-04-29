@@ -1,0 +1,16 @@
+#macro(pageTemplate $pageKey $pageTitle)
+    <script type="text/javascript">
+    	$(document).ready(function() {
+        	customStyle("${pageKey}");
+        	addButton({
+        		text: "新建${pageTitle}",
+        		parent: $("#panel"),
+        		callback: function() {
+        			$("#${pageKey}Dialog").modal();
+        		}
+        	});
+        });
+    </script>
+    <table id="${pageKey}Table"></table>
+    <div id="${pageKey}Dialog"></div>
+#end

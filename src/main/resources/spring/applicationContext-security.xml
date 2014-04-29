@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+						http://www.springframework.org/schema/security
+						http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+	<security:global-method-security secured-annotations="enabled" />
+	<security:http auto-config="true" use-expressions="true" access-denied-page="/403.html">
+		<security:intercept-url pattern="/style/**" filters="none" />
+		<security:intercept-url pattern="/script/**" filters="none" />
+		<security:intercept-url pattern="/fonts/**" filters="none" />
+		<security:intercept-url pattern="/*.html" access="permitAll" />
+		<security:intercept-url pattern="/resource/getMenus.do**" access="permitAll" />
+		<security:intercept-url pattern="/**" access="isFullyAuthenticated()" />
+		<security:form-login login-page="/login.html" login-processing-url="/login" default-target-url="/"
+			always-use-default-target="true" />
+		<security:custom-filter ref="securityFilter" after="FILTER_SECURITY_INTERCEPTOR" />
+	</security:http>
+	<bean id="securityFilter" class="mine.mythos.security.SecurityFilter">
+		<!-- 用户拥有的权限 -->
+		<property name="authenticationManager" ref="authenticationManager" />
+		<!-- 用户是否拥有所请求资源的权限 -->
+		<property name="accessDecisionManager">
+			<bean class="mine.mythos.security.AccessDecisionManager" />
+		</property>
+		<!-- 资源与权限对应关系 -->
+		<property name="securityMetadataSource">
+			<bean class="mine.atlas.security.SecurityMetadataSource" />
+		</property>
+	</bean>
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider>
+			<security:user-service>
+				<security:user name="admin" authorities="ROLE_USER,ROLE_ADMIN" password="admin" />
+			</security:user-service>
+		</security:authentication-provider>
+		<security:authentication-provider user-service-ref="userDetailService" />
+	</security:authentication-manager>
+	<bean id="userDetailService" class="mine.atlas.security.UserDetailService" />
+</beans>
