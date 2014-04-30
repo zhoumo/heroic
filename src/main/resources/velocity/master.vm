@@ -4,22 +4,22 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<title>atlas</title>
+		<title>heroic</title>
 		
 		<script type="text/javascript" src="${rc.contextPath}/script/jquery.js"></script>
 		<script type="text/javascript" src="${rc.contextPath}/script/jquery.validate.js"></script>
 		<script type="text/javascript" src="${rc.contextPath}/script/bootstrap.js"></script>
 		<script type="text/javascript" src="${rc.contextPath}/script/base.js"></script>
-		<script type="text/javascript" src="${rc.contextPath}/script/mythos/util.js"></script>
-		<script type="text/javascript" src="${rc.contextPath}/script/mythos/navbar.js"></script>
-		<script type="text/javascript" src="${rc.contextPath}/script/mythos/dialog.js"></script>
-		<script type="text/javascript" src="${rc.contextPath}/script/mythos/datatable.js"></script>
-		<script type="text/javascript" src="${rc.contextPath}/script/mythos/selector.js"></script>
+		<script type="text/javascript" src="${rc.contextPath}/script/heroic/util.js"></script>
+		<script type="text/javascript" src="${rc.contextPath}/script/heroic/navbar.js"></script>
+		<script type="text/javascript" src="${rc.contextPath}/script/heroic/dialog.js"></script>
+		<script type="text/javascript" src="${rc.contextPath}/script/heroic/datatable.js"></script>
+		<script type="text/javascript" src="${rc.contextPath}/script/heroic/selector.js"></script>
 		<script type="text/javascript" src="${rc.contextPath}/script/content/index.js"></script>
 		
 		<link href="${rc.contextPath}/style/bootstrap.css" type="text/css" rel="stylesheet" media="screen"/>
 		<link href="${rc.contextPath}/style/flat.ui.css" type="text/css" rel="stylesheet" media="screen"/>
-		<link href="${rc.contextPath}/style/mythos.css" type="text/css" rel="stylesheet" media="screen"/>
+		<link href="${rc.contextPath}/style/heroic.css" type="text/css" rel="stylesheet" media="screen"/>
 	</head>
 	<body>
 		<div class="container">

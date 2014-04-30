@@ -21,7 +21,7 @@
 	</bean>
 	<aop:aspectj-autoproxy proxy-target-class="true" />
 	<context:annotation-config />
-	<context:component-scan base-package="mine" />
+	<context:component-scan base-package="mine.heroic" />
 	<!-- 数据源 -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${jdbc.driver}" />
@@ -39,7 +39,7 @@
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 			</props>
 		</property>
-		<property name="packagesToScan" value="mine.**.model" />
+		<property name="packagesToScan" value="mine.heroic.model" />
 	</bean>
 	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
@@ -59,5 +59,5 @@
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 	<import resource="applicationContext-mvc.xml" />
 	<import resource="applicationContext-security.xml" />
-	<import resource="applicationContext-mythos.xml" />
+	<import resource="applicationContext-heroic.xml" />
 </beans>

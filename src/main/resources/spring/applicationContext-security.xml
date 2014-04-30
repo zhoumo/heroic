@@ -17,16 +17,16 @@
 			always-use-default-target="true" />
 		<security:custom-filter ref="securityFilter" after="FILTER_SECURITY_INTERCEPTOR" />
 	</security:http>
-	<bean id="securityFilter" class="mine.mythos.security.SecurityFilter">
+	<bean id="securityFilter" class="mine.heroic.security.SecurityFilter">
 		<!-- 用户拥有的权限 -->
 		<property name="authenticationManager" ref="authenticationManager" />
 		<!-- 用户是否拥有所请求资源的权限 -->
 		<property name="accessDecisionManager">
-			<bean class="mine.mythos.security.AccessDecisionManager" />
+			<bean class="mine.heroic.security.AccessDecisionManager" />
 		</property>
 		<!-- 资源与权限对应关系 -->
 		<property name="securityMetadataSource">
-			<bean class="mine.atlas.security.SecurityMetadataSource" />
+			<bean class="mine.heroic.security.SecurityMetadataSource" />
 		</property>
 	</bean>
 	<security:authentication-manager alias="authenticationManager">
@@ -37,5 +37,5 @@
 		</security:authentication-provider>
 		<security:authentication-provider user-service-ref="userDetailService" />
 	</security:authentication-manager>
-	<bean id="userDetailService" class="mine.atlas.security.UserDetailService" />
+	<bean id="userDetailService" class="mine.heroic.security.UserDetailService" />
 </beans>
