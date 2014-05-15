@@ -16,10 +16,10 @@ function createTag(tag) {
 	return $("<" + tag + "></" + tag + ">");
 }
 
-function customStyle(key, title, toolbar) {
+function buildCustom(key, title, toolbar) {
 	$.ajax({
 		type: "post",
-		url: "getCustomStyle.do",
+		url: "getCustom.do",
 		dataType: "json",
 		success: function(data) {
 			$("#" + key + "Table").datatable({
@@ -73,7 +73,7 @@ function customStyle(key, title, toolbar) {
 			});
 		},
 		error: function() {
-			alert("Get CustomStyle Failed");
+			alert("Get custom failed.");
 		}
 	});
 }

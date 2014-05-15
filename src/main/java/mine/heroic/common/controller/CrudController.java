@@ -98,9 +98,9 @@ public abstract class CrudController<T extends BaseEntity> extends BaseControlle
 		return baseService.checkUnique(field, value, id, getGenericType());
 	}
 
-	@RequestMapping("/getCustomStyle.do")
+	@RequestMapping("/getCustom.do")
 	@ResponseBody
-	protected String getCustomStyle() {
+	protected String getCustom() {
 		String json = "";
 		try {
 			json = baseService.resolveCustom(getGenericType());

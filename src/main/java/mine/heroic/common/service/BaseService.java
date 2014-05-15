@@ -141,8 +141,10 @@ public class BaseService<T extends BaseEntity> extends BaseClass {
 		for (Field field : clazz.getDeclaredFields()) {
 			if (field.isAnnotationPresent(Title.class)) {
 				Title titleAnnotation = field.getAnnotation(Title.class);
-				keyList.add(field.getName());
-				titleList.add(titleAnnotation.value());
+				if (titleAnnotation.show()) {
+					keyList.add(field.getName());
+					titleList.add(titleAnnotation.value());
+				}
 			}
 		}
 		dataTable.setKeys(keyList);

@@ -23,6 +23,10 @@ import mine.heroic.common.BaseEntity;
 @SuppressWarnings("serial")
 public class SysResource extends BaseEntity {
 
+	public static final String TYPE_MENU = "MENU";
+
+	public static final String TYPE_REQUEST = "REQUEST";
+
 	@Title(value = "资源名")
 	@Component
 	@Validate(required = true)
@@ -35,7 +39,13 @@ public class SysResource extends BaseEntity {
 	@Column(name = "resource_key")
 	private String key;
 
-	@Title(value = "隶属上级")
+	@Title(value = "资源类型")
+	@Component(type = Component.SELECT, text = { "菜单", "请求" }, value = { "MENU", "REQUEST" })
+	@Validate(required = true)
+	@Column(name = "resource_type")
+	private String type;
+
+	@Title(value = "隶属上级", show = false)
 	@Component(type = Component.SELECT, url = "getAll.do", text = "name", value = "id")
 	@Validate(required = true)
 	@Column(name = "parent_id")
@@ -65,6 +75,14 @@ public class SysResource extends BaseEntity {
 
 	public void setKey(String key) {
 		this.key = key;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public Long getParentId() {

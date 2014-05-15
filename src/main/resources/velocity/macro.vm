@@ -1,7 +1,7 @@
 #macro(pageTemplate $pageKey $pageTitle)
     <script type="text/javascript">
     	$(document).ready(function() {
-        	customStyle("${pageKey}");
+        	buildCustom("${pageKey}");
         	addButton({
         		text: "新建${pageTitle}",
         		parent: $("#panel"),

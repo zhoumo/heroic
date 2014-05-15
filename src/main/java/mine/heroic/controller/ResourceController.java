@@ -22,9 +22,9 @@ public class ResourceController extends CrudController<SysResource> {
 	@RequestMapping("/getMenus.do")
 	protected void getMenus(String callback, HttpServletResponse response) {
 		try {
-			jsonpCallback(response, callback, baseService.findAll(SysResource.class));
+			jsonpCallback(response, callback, baseService.findBy("type", SysResource.TYPE_MENU, SysResource.class));
 		} catch (IOException e) {
-			logger.error("error", e);
+			logger.error("Get menus failed", e);
 		}
 	}
 }

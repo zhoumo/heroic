@@ -10,4 +10,6 @@ import java.lang.annotation.Target;
 public @interface Title {
 
 	String value() default "";
+
+	boolean show() default true;
 }
