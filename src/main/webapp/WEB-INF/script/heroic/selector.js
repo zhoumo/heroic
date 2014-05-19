@@ -13,7 +13,7 @@ Selector = Base.extend({
 	},
 	decorate: function() {
 		var _this = this;
-		this.selector.attr("style", "display: block; padding-left: 80px; margin-top: -50px");
+		this.selector.attr("style", "padding-left: 80px; margin-top: -55px;");
 		var select = createTag("select");
 		select.addClass("form-control");
 		select.attr("style", "width: 150px");

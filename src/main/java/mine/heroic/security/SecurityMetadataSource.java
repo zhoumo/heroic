@@ -16,7 +16,11 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.security.web.util.AntUrlPathMatcher;
+import org.springframework.security.web.util.UrlMatcher;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SecurityMetadataSource extends BaseClass implements FilterInvocationSecurityMetadataSource {
 
 	private static Map<String, Collection<ConfigAttribute>> resourceMap = null;
@@ -24,8 +28,8 @@ public class SecurityMetadataSource extends BaseClass implements FilterInvocatio
 	@Autowired
 	private BaseService<SysResource> baseService;
 
-	private void loadResourceDefine() {
-		if (resourceMap == null) {
+	public void loadResource(Boolean enforce) {
+		if (resourceMap == null || enforce) {
 			resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
 			List<SysResource> resources = baseService.findAll(SysResource.class);
 			for (SysResource resource : resources) {
@@ -41,16 +45,10 @@ public class SecurityMetadataSource extends BaseClass implements FilterInvocatio
 
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		String requestUrl = ((FilterInvocation) object).getRequestUrl();
-		if (resourceMap == null) {
-			loadResourceDefine();
-		}
+		loadResource(false);
+		UrlMatcher urlMatcher = new AntUrlPathMatcher();
 		for (String key : resourceMap.keySet()) {
-			String regex = key.replaceAll("\\*\\*", "[\\\\w\\\\W]*"); // 匹配带**的URL
-			if (requestUrl.matches(regex)) {
-				return resourceMap.get(key);
-			}
-			regex = key = key.replaceAll("\\*", "((?!/).)*"); // 匹配带*的URL
-			if (requestUrl.matches(regex)) {
+			if (urlMatcher.pathMatchesUrl(key, requestUrl)) {
 				return resourceMap.get(key);
 			}
 		}

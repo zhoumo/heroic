@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import mine.heroic.common.BaseEntity;
 import mine.heroic.common.service.BaseService;
+import mine.heroic.util.StringUtil;
 import mine.heroic.vo.Page;
 
 import org.apache.commons.lang.StringUtils;
@@ -23,6 +24,8 @@ public abstract class CrudController<T extends BaseEntity> extends BaseControlle
 	protected BaseService<T> baseService;
 
 	protected String index = StringUtils.EMPTY;
+
+	protected String selectedIds = StringUtils.EMPTY;
 
 	protected void setIndex(String index) {
 		this.index = index;
@@ -58,12 +61,18 @@ public abstract class CrudController<T extends BaseEntity> extends BaseControlle
 	@RequestMapping("/save.do")
 	protected String saveOrUpdate(@ModelAttribute T entity, HttpServletRequest request) {
 		configure();
+		this.selectedIds = request.getParameter("selectedIds") == null ? "" : request.getParameter("selectedIds");
+		this.selectedIds = StringUtil.convertCommaSeparated(this.selectedIds, "\\|");
 		beforeSaveOrUpdate(entity, request);
 		baseService.saveOrUpdate(entity);
+		afterSaveOrUpdate(entity, request);
 		return this.saveReturn;
 	}
 
 	protected void beforeSaveOrUpdate(@ModelAttribute T entity, HttpServletRequest request) {
+	}
+
+	protected void afterSaveOrUpdate(@ModelAttribute T entity, HttpServletRequest request) {
 	}
 
 	@RequestMapping("/delete.do")
@@ -71,10 +80,14 @@ public abstract class CrudController<T extends BaseEntity> extends BaseControlle
 		configure();
 		beforeDelete(entity, request);
 		baseService.delete(entity);
+		afterDelete(entity, request);
 		return this.deleteReturn;
 	}
 
 	protected void beforeDelete(@ModelAttribute T entity, HttpServletRequest request) {
+	}
+
+	protected void afterDelete(@ModelAttribute T entity, HttpServletRequest request) {
 	}
 
 	@RequestMapping("/get.do")

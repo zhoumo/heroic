@@ -6,12 +6,11 @@
 						http://www.springframework.org/schema/security
 						http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 	<security:global-method-security secured-annotations="enabled" />
-	<security:http auto-config="true" use-expressions="true" access-denied-page="/403.html">
+	<security:http auto-config="true" use-expressions="true">
 		<security:intercept-url pattern="/style/**" filters="none" />
 		<security:intercept-url pattern="/script/**" filters="none" />
 		<security:intercept-url pattern="/fonts/**" filters="none" />
 		<security:intercept-url pattern="/*.html" access="permitAll" />
-		<security:intercept-url pattern="/resource/getMenus.do**" access="permitAll" />
 		<security:intercept-url pattern="/**" access="isFullyAuthenticated()" />
 		<security:form-login login-page="/login.html" login-processing-url="/login" default-target-url="/"
 			always-use-default-target="true" />

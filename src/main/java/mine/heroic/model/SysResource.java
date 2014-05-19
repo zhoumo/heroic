@@ -46,7 +46,7 @@ public class SysResource extends BaseEntity {
 	private String type;
 
 	@Title(value = "隶属上级", show = false)
-	@Component(type = Component.SELECT, url = "getAll.do", text = "name", value = "id")
+	@Component(type = Component.SELECT, url = "getParentResource.do", text = "name", value = "id")
 	@Validate(required = true)
 	@Column(name = "parent_id")
 	private Long parentId;
@@ -57,6 +57,8 @@ public class SysResource extends BaseEntity {
 	@Column(name = "resource_url")
 	private String url;
 
+	@Title(value = "赋予角色")
+	@Component(type = Component.SELECTOR, url = "role/getAll.do")
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinTable(name = "sys_resource_role", joinColumns = { @JoinColumn(name = "resource_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	private Set<SysRole> roles;
