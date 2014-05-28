@@ -14,12 +14,12 @@ public class ServiceAspect extends BaseClass {
 
 	private Long startTime, endTime;
 
-	@Before("execution (* mine.*.service..*(..))")
+	@Before("execution (* mine..service..*(..))")
 	public void doBefore(JoinPoint joinPoint) {
 		startTime = System.currentTimeMillis();
 	}
 
-	@After("execution (* mine.*.service..*(..))")
+	@After("execution (* mine..service..*(..))")
 	public void doAfter(JoinPoint joinPoint) {
 		endTime = System.currentTimeMillis();
 		logger.debug(joinPoint.getSignature().toLongString() + " cost " + Long.toString(endTime - startTime) + "ms");
