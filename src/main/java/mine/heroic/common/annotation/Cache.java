@@ -1,4 +1,4 @@
-package mine.heroic.annotation;
+package mine.heroic.common.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,7 +7,11 @@ import java.lang.annotation.Target;
 
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Key {
+public @interface Cache {
 
-	String value() default "";
+	boolean useMemcached() default false;
+
+	boolean useRedis() default false;
+
+	boolean useMongodb() default false;
 }

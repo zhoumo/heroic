@@ -1,7 +1,7 @@
 package mine.heroic.common.cache;
 
-import mine.heroic.annotation.Cache;
 import mine.heroic.common.BaseEntity;
+import mine.heroic.common.annotation.Cache;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package mine.heroic.annotation;
+package mine.heroic.common.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,13 +7,9 @@ import java.lang.annotation.Target;
 
 @Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Validate {
+public @interface Title {
 
-	boolean required() default false;
+	String value() default "";
 
-	boolean unique() default false;
-
-	int minLength() default 0;
-
-	int maxLength() default 0;
+	boolean show() default true;
 }

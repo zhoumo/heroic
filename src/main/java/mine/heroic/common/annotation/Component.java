@@ -1,4 +1,4 @@
-package mine.heroic.annotation;
+package mine.heroic.common.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

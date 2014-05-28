@@ -9,11 +9,11 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import mine.heroic.annotation.Component;
-import mine.heroic.annotation.Key;
-import mine.heroic.annotation.Title;
-import mine.heroic.annotation.Validate;
 import mine.heroic.common.BaseEntity;
+import mine.heroic.common.annotation.Component;
+import mine.heroic.common.annotation.Key;
+import mine.heroic.common.annotation.Title;
+import mine.heroic.common.annotation.Validate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

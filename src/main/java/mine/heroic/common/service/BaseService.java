@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import mine.heroic.annotation.Component;
-import mine.heroic.annotation.Title;
-import mine.heroic.annotation.Validate;
 import mine.heroic.common.BaseClass;
 import mine.heroic.common.BaseDao;
 import mine.heroic.common.BaseEntity;
+import mine.heroic.common.annotation.Component;
+import mine.heroic.common.annotation.Title;
+import mine.heroic.common.annotation.Validate;
 import mine.heroic.common.cache.BaseCache;
 import mine.heroic.util.BeanUtil;
 import mine.heroic.util.StringUtil;
