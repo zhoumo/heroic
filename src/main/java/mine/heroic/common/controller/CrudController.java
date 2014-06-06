@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mine.heroic.common.BaseEntity;
-import mine.heroic.common.service.BaseService;
+import mine.heroic.common.BaseService;
 import mine.heroic.util.StringUtil;
 import mine.heroic.vo.Page;
 

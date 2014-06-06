@@ -1,4 +1,4 @@
-package mine.heroic.common.service;
+package mine.heroic.common;
 
 import java.io.IOException;
 import java.lang.reflect.Field;

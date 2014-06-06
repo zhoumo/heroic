@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import mine.heroic.common.BaseClass;
-import mine.heroic.common.service.BaseService;
+import mine.heroic.common.BaseService;
 import mine.heroic.model.SysResource;
 import mine.heroic.model.SysRole;
 
