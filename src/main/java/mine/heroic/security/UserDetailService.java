@@ -4,8 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import mine.heroic.common.BaseClass;
-import mine.heroic.common.BaseService;
+import mine.heroic.common.service.BaseService;
 import mine.heroic.model.SysRole;
 import mine.heroic.model.SysUser;
 
@@ -17,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-public class UserDetailService extends BaseClass implements UserDetailsService {
+public class UserDetailService implements UserDetailsService {
 
 	@Autowired
 	private BaseService<SysUser> baseService;

@@ -1,12 +1,14 @@
 package mine.heroic.common.controller;
 
 import java.io.IOException;
+import java.lang.reflect.ParameterizedType;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mine.heroic.common.BaseEntity;
-import mine.heroic.common.BaseService;
+import mine.heroic.common.service.BaseService;
+import mine.heroic.common.service.CustomService;
 import mine.heroic.util.StringUtil;
 import mine.heroic.vo.Page;
 
@@ -23,9 +25,14 @@ public abstract class CrudController<T extends BaseEntity> extends BaseControlle
 	@Autowired
 	protected BaseService<T> baseService;
 
-	protected String index = StringUtils.EMPTY;
+	@Autowired
+	protected CustomService<T> customService;
 
-	protected String selectedIds = StringUtils.EMPTY;
+	protected Class<T> clazz;
+
+	public CrudController() {
+		this.clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+	}
 
 	protected void setIndex(String index) {
 		this.index = index;
@@ -43,6 +50,10 @@ public abstract class CrudController<T extends BaseEntity> extends BaseControlle
 		this.deleteReturn = deleteReturn;
 	}
 
+	protected String selectedIds = StringUtils.EMPTY;
+
+	protected String index = StringUtils.EMPTY;
+
 	@RequestMapping("/index.do")
 	protected ModelAndView index() {
 		configure();
@@ -55,7 +66,7 @@ public abstract class CrudController<T extends BaseEntity> extends BaseControlle
 		if (page.getPageSize() < 1) {
 			page.setPageSize(10);
 		}
-		return baseService.pagination(page, getGenericType());
+		return baseService.pagination(page, clazz);
 	}
 
 	@RequestMapping("/save.do")
@@ -93,13 +104,13 @@ public abstract class CrudController<T extends BaseEntity> extends BaseControlle
 	@RequestMapping("/get.do")
 	@ResponseBody
 	protected BaseEntity get(Long id) {
-		return baseService.get(id, getGenericType());
+		return baseService.get(id, clazz);
 	}
 
 	@RequestMapping("/getAll.do")
 	protected void getAll(String callback, HttpServletResponse response) {
 		try {
-			jsonpCallback(response, callback, baseService.findAll(getGenericType()));
+			jsonpCallback(response, callback, baseService.findAll(clazz));
 		} catch (IOException e) {
 			logger.error("error", e);
 		}
@@ -108,7 +119,7 @@ public abstract class CrudController<T extends BaseEntity> extends BaseControlle
 	@RequestMapping("/checkUnique.do")
 	@ResponseBody
 	protected boolean checkUnique(String field, String value, Long id) {
-		return baseService.checkUnique(field, value, id, getGenericType());
+		return baseService.checkUnique(field, value, id, clazz);
 	}
 
 	@RequestMapping("/getCustom.do")
@@ -116,7 +127,7 @@ public abstract class CrudController<T extends BaseEntity> extends BaseControlle
 	protected String getCustom() {
 		String json = "";
 		try {
-			json = baseService.resolveCustom(getGenericType());
+			json = customService.resolveCustom(clazz);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

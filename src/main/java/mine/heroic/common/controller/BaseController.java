@@ -6,10 +6,14 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import mine.heroic.common.BaseClass;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import mine.heroic.util.BeanUtil;
 
-public abstract class BaseController extends BaseClass {
+public abstract class BaseController {
+
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected Map<String, Object> model = new HashMap<String, Object>();
 

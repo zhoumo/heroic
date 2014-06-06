@@ -3,15 +3,13 @@ package mine.heroic.security;
 import java.util.Collection;
 import java.util.Iterator;
 
-import mine.heroic.common.BaseClass;
-
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-public class AccessDecisionManager extends BaseClass implements org.springframework.security.access.AccessDecisionManager {
+public class AccessDecisionManager implements org.springframework.security.access.AccessDecisionManager {
 
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
 		if (configAttributes == null) {

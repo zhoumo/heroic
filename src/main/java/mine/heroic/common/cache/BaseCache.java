@@ -1,9 +1,13 @@
 package mine.heroic.common.cache;
 
-import mine.heroic.common.BaseClass;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import mine.heroic.common.BaseEntity;
 
-public abstract class BaseCache extends BaseClass {
+public abstract class BaseCache {
+
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	public abstract Object get(String key);
 

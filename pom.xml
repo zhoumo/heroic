@@ -175,24 +175,11 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.18</version>
 		</dependency>
-		<!-- Quart -->
-		<dependency>
-			<groupId>org.quartz-scheduler</groupId>
-			<artifactId>quartz</artifactId>
-			<version>1.8.4</version>
-		</dependency>
 		<!-- Memcached -->
 		<dependency>
 			<groupId>com.whalin</groupId>
 			<artifactId>Memcached-Java-Client</artifactId>
 			<version>3.0.2</version>
-		</dependency>
-		<!-- Json -->
-		<dependency>
-			<groupId>net.sf.json-lib</groupId>
-			<artifactId>json-lib</artifactId>
-			<version>2.4</version>
-			<classifier>jdk15</classifier>
 		</dependency>
 		<!-- Servlet -->
 		<dependency>

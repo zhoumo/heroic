@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"
 	default-autowire="byName">
-	<bean id="baseService" class="mine.heroic.common.BaseService">
+	<bean id="baseService" class="mine.heroic.common.service.BaseService">
 		<property name="cacheList">
 			<list>
 				<bean class="mine.heroic.common.cache.MemcachedService" />

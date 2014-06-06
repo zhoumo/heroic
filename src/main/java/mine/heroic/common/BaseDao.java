@@ -8,6 +8,8 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,10 +17,12 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings("unchecked")
 public class BaseDao<T extends BaseEntity> {
 
+	protected Logger logger = LoggerFactory.getLogger(getClass());
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public Query createQuery(String queryString, Object... values) {
+	private Query createQuery(String queryString, Object... values) {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery(queryString);
 		if (values != null) {
@@ -27,6 +31,18 @@ public class BaseDao<T extends BaseEntity> {
 			}
 		}
 		return query;
+	}
+
+	private Long countHqlResult(String hql, Object... values) {
+		String countHql = prepareCountHql(hql);
+		return findUnique(countHql, values);
+	}
+
+	private String prepareCountHql(String hql) {
+		hql = "from " + StringUtils.substringAfter(hql, "from");
+		hql = StringUtils.substringBefore(hql, "order by");
+		String countHql = "select count(*) " + hql;
+		return countHql;
 	}
 
 	public List<T> find(String hql, Object... values) {
@@ -39,18 +55,6 @@ public class BaseDao<T extends BaseEntity> {
 
 	public List<T> findAll(String entity) {
 		return createQuery("from " + entity).list();
-	}
-
-	protected Long countHqlResult(String hql, Object... values) {
-		String countHql = prepareCountHql(hql);
-		return findUnique(countHql, values);
-	}
-
-	private String prepareCountHql(String hql) {
-		hql = "from " + StringUtils.substringAfter(hql, "from");
-		hql = StringUtils.substringBefore(hql, "order by");
-		String countHql = "select count(*) " + hql;
-		return countHql;
 	}
 
 	public Page<T> findPage(Page<T> page, String hql, Object... values) {
