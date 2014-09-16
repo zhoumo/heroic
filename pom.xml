@@ -8,11 +8,25 @@
 	<name>heroic</name>
 	<url></url>
 	<properties>
+		<java.version>1.6</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>3.2.4.RELEASE</spring.version>
 		<spring.security.version>3.0.8.RELEASE</spring.security.version>
 		<hibernate.version>3.4.0.GA</hibernate.version>
+		<slf4j.version>1.6.4</slf4j.version>
 	</properties>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>InternalSnapshots</id>
+			<name>Internal Snapshots</name>
+			<url>http://192.168.16.232:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+		<repository>
+			<id>InternalReleases</id>
+			<name>Internal Releases</name>
+			<url>http://192.168.16.232:8081/nexus/content/repositories/releases/</url>
+		</repository>
+	</distributionManagement>
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
@@ -107,17 +121,17 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.6.4</version>
+			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
-			<version>1.6.4</version>
+			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.6.4</version>
+			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
@@ -194,24 +208,37 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.3</version>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.4.3</version>
 				<configuration>
-					<webResources>
-						<resource>
-							<directory>src/main/webapp</directory>
-						</resource>
-					</webResources>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<configuration>
+					<warName>heroic</warName>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<packagingExcludes>WEB-INF/web.xml</packagingExcludes>
 					<archive>
 						<manifest>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 						</manifest>
 						<manifestEntries>
-							<Build-Number>${BUILD_NUMBER}</Build-Number>
 							<Job-Name>${JOB_NAME}</Job-Name>
-							<Build-Url>${BUILD_URL}</Build-Url>
-							<Svn-Revision>${SVN_REVISION}</Svn-Revision>
 							<Timestamp>${maven.build.timestamp}</Timestamp>
 						</manifestEntries>
 					</archive>
@@ -224,12 +251,29 @@
 				<executions>
 					<execution>
 						<id>attach-sources</id>
-						<phase>verify</phase>
 						<goals>
 							<goal>jar-no-fork</goal>
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.2.1</version>
 			</plugin>
 		</plugins>
 	</build>

@@ -1,10 +1,10 @@
 NavBar = Base.extend({
-	nav: null,
-	navbar: null,
-	constructor: function(navbar) {
+	nav : null,
+	navbar : null,
+	constructor : function(navbar) {
 		this.navbar = navbar;
 	},
-	decorate: function() {
+	decorate : function() {
 		var collapse = createTag("div");
 		collapse.addClass("navbar-collapse collapse navbar-collapse-01");
 		this.navbar.addClass("navbar navbar-inverse");
@@ -16,11 +16,11 @@ NavBar = Base.extend({
 		var logout = $("<ul class='nav navbar-nav navbar-right'><li><a href='" + getContextPath() + "/j_spring_security_logout'>退出</a></li></ul>");
 		logout.appendTo(navbar);
 	},
-	createNavMenu: function(id, resources, container) {
+	createNavMenu : function(id, resources, container) {
 		if (container == null) {
 			container = this.nav;
 		}
-		for (var index = 0; index < resources.length; index++) {
+		for ( var index = 0; index < resources.length; index++) {
 			var resource = resources[index];
 			if (resource.parentId != id) {
 				continue;
@@ -34,29 +34,28 @@ NavBar = Base.extend({
 		}
 	}
 });
-
 (function($) {
 	$.fn.extend({
-		navigate: function(setting) {
+		navigate : function(setting) {
 			var defaults = {
-				url: null,
-				callback: null
+				url : null,
+				callback : null
 			};
 			var config = $.extend(defaults, setting || {});
 			var navbar = new NavBar($(this));
 			navbar.decorate();
 			$.ajax({
-				type: "post",
-				url: getContextPath() + config.url,
-				dataType: "jsonp",
-				async: false,
-				success: function(data) {
+				type : "post",
+				url : getContextPath() + config.url,
+				dataType : "jsonp",
+				async : false,
+				success : function(data) {
 					var resources = eval(data);
 					if (resources.length > 0) {
 						navbar.createNavMenu(0, resources);
 					}
 				},
-				error: function() {
+				error : function() {
 					alert("Loading Failed.");
 				}
 			});

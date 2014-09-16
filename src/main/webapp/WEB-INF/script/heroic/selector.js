@@ -1,8 +1,8 @@
 Selector = Base.extend({
-	selector: null,
-	url: null,
-	selectedIds: null,
-	constructor: function(selector, settings) {
+	selector : null,
+	url : null,
+	selectedIds : null,
+	constructor : function(selector, settings) {
 		this.selector = selector;
 		this.url = settings.url;
 		this.selectedIds = createTag("input");
@@ -11,19 +11,19 @@ Selector = Base.extend({
 		this.selectedIds.val("|");
 		this.selectedIds.appendTo(this.selector);
 	},
-	decorate: function() {
+	decorate : function() {
 		var _this = this;
 		this.selector.attr("style", "padding-left: 80px; margin-top: -55px;");
 		var select = createTag("select");
 		select.addClass("form-control");
 		select.attr("style", "width: 150px");
 		$.ajax({
-			type: "post",
-			url: getContextPath() + "/" + _this.url,
-			dataType: "jsonp",
-			async: false,
-			success: function(data) {
-				for (var index = 0; index < data.length; index++) {
+			type : "post",
+			url : getContextPath() + "/" + _this.url,
+			dataType : "jsonp",
+			async : false,
+			success : function(data) {
+				for ( var index = 0; index < data.length; index++) {
 					var option = createTag("option");
 					option.val(data[index].id);
 					option.text(data[index].name);
@@ -55,7 +55,7 @@ Selector = Base.extend({
 			}
 		});
 	},
-	createItem: function(id, text) {
+	createItem : function(id, text) {
 		var _this = this;
 		var item = createTag("div");
 		item.attr("style", "padding-top: 5px");
@@ -77,12 +77,11 @@ Selector = Base.extend({
 		display.appendTo(item);
 	}
 });
-
 (function($) {
 	$.fn.extend({
-		createSelector: function(setting) {
+		createSelector : function(setting) {
 			var defaults = {
-				url: null
+				url : null
 			};
 			var selector = new Selector($(this), $.extend(defaults, setting || {}));
 			selector.decorate();
