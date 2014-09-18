@@ -1,16 +1,8 @@
-#macro(pageTemplate $pageKey $pageTitle)
-    <script type="text/javascript">
-    	$(document).ready(function() {
-        	buildCustom("${pageKey}");
-        	addButton({
-        		text: "新建${pageTitle}",
-        		parent: $("#panel"),
-        		callback: function() {
-        			$("#${pageKey}Dialog").modal();
-        		}
-        	});
-        });
-    </script>
-    <table id="${pageKey}Table"></table>
-    <div id="${pageKey}Dialog"></div>
+#macro(pageTemplate $key $title)
+	<script type="text/javascript">
+		require(["main"], function(main) {
+			main.build("$key", "$title");
+		});
+	</script>
+	<div id="${key}Container"></div>
 #end

@@ -1,0 +1,18 @@
+<script id="dialogTmpl" type="text/x-jquery-tmpl">
+	<div id="${key}Dialog" class="modal fade" data-backdrop="static">
+		<div class="modal-dialog" style="width:600px">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="modal-title">操作面板</div>
+				</div>
+				<form id="${key}Form" action="save.do" method="post">
+					<div id="modalBody" class="modal-body"></div>
+                	<div class="modal-footer">
+						<input class="btn btn-primary" type="submit" value="提交" />
+						<input class="btn btn-default" type="button" value="关闭" />
+					</div>
+            	</form>
+        	</div>
+    	</div>
+	</div>
+</script>
