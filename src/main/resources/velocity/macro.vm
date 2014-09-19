@@ -1,7 +1,7 @@
 #macro(pageTemplate $key $title)
 	<script type="text/javascript">
-		require(["main"], function(main) {
-			main.build("$key", "$title");
+		require(["custom/builder"], function(builder) {
+			builder.build("$key", "$title");
 		});
 	</script>
 	<div id="${key}Container"></div>
