@@ -5,7 +5,7 @@ define(function() {
 			button.appendTo(container);
 			button.text("新建" + settings.title);
 			button.click(function() {
-				$("#" + settings.key + "Dialog").modal();
+				$("[type=dialog]").filter("[key=" + settings.key + "]").modal();
 			});
 		}
 	};

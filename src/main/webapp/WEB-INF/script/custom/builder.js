@@ -2,16 +2,15 @@ define([ "jquery", "custom/ajax", "custom/toolbar", "custom/datatable", "custom/
 	return {
 		build : function(key, title) {
 			var custom = ajax.syncAjax("getCustom.do", "json");
-			toolbar.render($("#toolbar"), {
+			toolbar.render($("[type=toolbar]"), {
 				key : key,
 				title : title
 			});
-			datatable.render($("#" + key + "Datatable"), 1, {
-				key : key,
+			datatable.render($("[type=datatable]").filter("[key=" + key + "]"), 1, {
 				keys : custom.dataTable.keys,
 				titles : custom.dataTable.titles
 			});
-			dialog.render($("#" + key + "Dialog"), custom.dialog);
+			dialog.render($("[type=dialog]").filter("[key=" + key + "]"), custom.dialog);
 			validate.register(key, custom.validates);
 		}
 	};

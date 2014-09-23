@@ -2,15 +2,14 @@ require.config({
 	baseUrl : ctx + "/script",
 	paths : {
 		"jquery" : "jquery",
-		"validate" : "jquery.validate",
+		"jquery.validate" : "jquery.validate",
 		"bootstrap" : "bootstrap"
 	},
 	shim : {
 		"jquery" : {
 			exports : "$"
 		},
-		"validate" : {
-			exports : "validate",
+		"jquery.validate" : {
 			deps : [ "jquery" ]
 		},
 		"bootstrap" : {
@@ -18,12 +17,11 @@ require.config({
 			deps : [ "jquery" ]
 		}
 	},
-	// enforceDefine : true,
-	waitSeconds : 5
+	waitSeconds : 0
 });
 define(function() {
 	require([ "jquery", "custom/navbar" ], function($, navbar) {
-		navbar.render($("#navbar"), {
+		navbar.render($("[type=navbar]"), {
 			logout : ctx + "/j_spring_security_logout",
 			dataUrl : "/resource/getMenus.do"
 		});

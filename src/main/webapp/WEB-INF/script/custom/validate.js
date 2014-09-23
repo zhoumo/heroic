@@ -1,4 +1,4 @@
-define([ "validate" ], function() {
+define([ "jquery.validate" ], function() {
 	function validateRules(settings) {
 		var rules = new Object();
 		for ( var index = 0; index < settings.length; index++) {

@@ -11,7 +11,7 @@
 	</head>
 	<body>
 		<div class="container">
-			<div id="navbar"></div>
+			<div type="navbar"></div>
 			<div class="panel-group" style="float:left; width:20%">
 				<div class="panel panel-default">
 					<div class="panel-heading">
@@ -20,7 +20,7 @@
 						</h4>
 					</div>
 					<div class="panel-collapse collapse in">
-						<div id="toolbar" class="panel-body"></div>
+						<div type="toolbar" class="panel-body"></div>
 					</div>
 				</div>
 			</div>
