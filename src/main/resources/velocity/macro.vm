@@ -4,5 +4,6 @@
 			builder.build("$key", "$title");
 		});
 	</script>
-	<div id="${key}Container"></div>
+	<div id="${key}Datatable"></div>
+	<div id="${key}Dialog"></div>
 #end

@@ -1,26 +1,26 @@
-define([ "custom/base", "jquery.validate" ], function(base, validate) {
-	function validateRules(params) {
+define([ "validate" ], function() {
+	function validateRules(settings) {
 		var rules = new Object();
-		for ( var index = 0; index < params.length; index++) {
-			rules[params[index].key] = params[index].constraints;
-			if (rules[params[index].key].unique) {
-				// rules[params[index].key].remote = jsonCheckUnique(params[index].key);
+		for ( var index = 0; index < settings.length; index++) {
+			rules[settings[index].key] = settings[index].constraints;
+			if (rules[settings[index].key].unique) {
+				rules[settings[index].key].remote = jsonCheckUnique(settings[index].key);
 			}
-			if (rules[params[index].key].maxlength == 0) {
-				delete rules[params[index].key].maxlength;
+			if (rules[settings[index].key].maxlength == 0) {
+				delete rules[settings[index].key].maxlength;
 			}
-			if (rules[params[index].key].minlength == 0) {
-				delete rules[params[index].key].minlength;
+			if (rules[settings[index].key].minlength == 0) {
+				delete rules[settings[index].key].minlength;
 			}
-			delete rules[params[index].key].unique;
+			delete rules[settings[index].key].unique;
 		}
 		return rules;
 	}
-	function validateMessages(params) {
+	function validateMessages(settings) {
 		var messages = new Object();
-		for ( var index = 0; index < params.length; index++) {
-			if (params[index].constraints.unique) {
-				messages[params[index].key] = jQuery.parseJSON('{"remote":"该值必须唯一"}');
+		for ( var index = 0; index < settings.length; index++) {
+			if (settings[index].constraints.unique) {
+				messages[settings[index].key] = jQuery.parseJSON('{"remote":"该值必须唯一"}');
 			}
 		}
 		return messages;
@@ -42,13 +42,13 @@ define([ "custom/base", "jquery.validate" ], function(base, validate) {
 		return jsonCheckUnique;
 	}
 	return {
-		register : function(key, params) {
+		register : function(key, settings) {
 			$("#" + key + "Form").validate({
 				submitHandler : function(form) {
 					form.submit();
 				},
-				messages : validateMessages(params),
-				rules : validateRules(params)
+				messages : validateMessages(settings),
+				rules : validateRules(settings)
 			});
 		}
 	};

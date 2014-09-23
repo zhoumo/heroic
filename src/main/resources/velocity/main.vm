@@ -6,12 +6,8 @@
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link href="${rc.contextPath}/style/main.css" type="text/css" rel="stylesheet" media="screen" />
-		<script type="text/javascript" src="${rc.contextPath}/script/require.js" data-main="${rc.contextPath}/script/main"></script>
-		<script type="text/javascript">
-			require([ "custom/navbar" ], function(navbar) {
-				navbar.render($("#navbar"));
-			});
-        </script>
+		<script type="text/javascript" src="${rc.contextPath}/script/require.js" data-main="${rc.contextPath}/script/config"></script>
+		<script type="text/javascript">var ctx = "${rc.contextPath}";</script>
 	</head>
 	<body>
 		<div class="container">

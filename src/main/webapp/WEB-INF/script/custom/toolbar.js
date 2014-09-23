@@ -1,12 +1,11 @@
-define([ "custom/base" ], function(base) {
+define(function() {
 	return {
-		render : function(container, params) {
-			var button = base.createTag("button", container);
-			button.addClass("btn btn-primary");
-			button.attr("style", "width: 100%");
-			button.text("新建" + params.title);
+		render : function(container, settings) {
+			var button = $("<button class='btn btn-primary' style='width:100%'></button>");
+			button.appendTo(container);
+			button.text("新建" + settings.title);
 			button.click(function() {
-				$("#" + params.key + "Dialog").modal();
+				$("#" + settings.key + "Dialog").modal();
 			});
 		}
 	};

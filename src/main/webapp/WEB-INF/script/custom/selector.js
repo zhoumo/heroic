@@ -1,60 +1,34 @@
-define([ "custom/base" ], function(base) {
+define([ "custom/ajax" ], function(ajax) {
 	var container = null;
 	var selectedIds = null;
 	function createItem(id, text) {
-		var item = base.createTag("div");
-		item.attr("style", "padding-top: 5px");
+		var item = $("<div style='padding-top:5px;padding-left:80px'></div>");
 		item.appendTo(container);
-		var deleteButton = base.createTag("button");
-		deleteButton.addClass("btn btn-primary btn-sm");
-		deleteButton.attr("type", "button");
+		var deleteButton = $("<button class='btn btn-primary btn-sm' type='button'></button>");
 		deleteButton.click(function() {
 			selectedIds.val(selectedIds.val().replace("|" + id + "|", "|"));
 			item.remove();
 		});
 		deleteButton.appendTo(item);
-		var icon = base.createTag("span");
-		icon.addClass("glyphicon glyphicon-trash");
-		icon.appendTo(deleteButton);
-		var display = base.createTag("span");
-		display.attr("style", "padding-left: 10px");
-		display.text(text);
+		deleteButton.append($("<span class='glyphicon glyphicon-trash'></span>"));
+		var display = $("<span style='padding-left:10px'>" + text + "</span>");
 		display.appendTo(item);
 	}
 	return {
-		decorate : function(url, container_) {
+		render : function(url, container_) {
 			container = container_;
-			selectedIds = base.createTag("input");
-			selectedIds.attr("type", "hidden");
-			selectedIds.attr("name", "selectedIds");
-			selectedIds.val("|");
+			selectedIds = $("<input type='hidden' name='selectedIds' value='|' />");
 			selectedIds.appendTo(container);
-			var select = base.createTag("select");
-			select.addClass("form-control");
-			select.attr("style", "width: 150px");
-			$.ajax({
-				type : "post",
-				url : base.getContextPath() + "/" + url,
-				dataType : "jsonp",
-				async : false,
-				success : function(data) {
-					for ( var index = 0; index < data.length; index++) {
-						var option = base.createTag("option");
-						option.val(data[index].id);
-						option.text(data[index].name);
-						option.appendTo(select);
-					}
-				}
-			});
+			var select = $("<select class='form-control' style='width:150px'></select>");
+			var data = ajax.syncAjax(ctx + "/" + url, "jsonp");
+			for ( var index = 0; index < data.length; index++) {
+				$("<option value='" + data[index].id + "'>" + data[index].name + "</option>").appendTo(select);
+			}
 			select.change(function() {
 				$(".repeatWarn").remove();
 			});
 			select.appendTo(container);
-			var addButton = base.createTag("button");
-			addButton.addClass("btn btn-primary");
-			addButton.attr("style", "margin-left: 20px");
-			addButton.attr("type", "button");
-			addButton.text("添加");
+			var addButton = $("<button class='btn btn-primary' style='margin-left:20px' type='button'>添加</button>");
 			addButton.appendTo(container);
 			addButton.click(function() {
 				$(".repeatWarn").remove();
@@ -63,10 +37,7 @@ define([ "custom/base" ], function(base) {
 					selectedIds.val(selectedIds.val() + id + "|");
 					createItem(id, select.find("option:selected").text());
 				} else {
-					var warn = base.createTag("label");
-					warn.addClass("validError repeatWarn");
-					warn.text("不能重复添加");
-					warn.insertAfter(addButton);
+					$("<label class='validError repeatWarn'>不能重复添加</label>").insertAfter(addButton);
 				}
 			});
 		}
