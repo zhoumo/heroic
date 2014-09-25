@@ -1,4 +1,4 @@
-define([ "custom/ajax", "custom/action" ], function(ajax, action) {
+define([ "custom/util", "custom/action" ], function(util, action) {
 	var actions = [ action.remove, action.update ];
 	function compute(records) {
 		var start = 1;
@@ -8,28 +8,26 @@ define([ "custom/ajax", "custom/action" ], function(ajax, action) {
 			end = records.pageNo + 2;
 		} else if ((records.pageNo - 2) < 1) {
 			start = 1;
-			if (records.totalPages <= 5) {
-				end = records.totalPages;
-			} else {
-				end = 5;
-			}
+			records.totalPages <= 5 ? end = records.totalPages : end = 5;
 		} else if ((records.pageNo + 2) > records.totalPages) {
 			end = records.totalPages;
-			if (records.totalPages > 5) {
-				start = records.totalPages - 4;
-			} else {
-				start = 1;
-			}
+			records.totalPages > 5 ? start = records.totalPages - 4 : start = 1;
 		}
 		return [ start, end ];
 	}
 	return {
 		load : function(pageNo) {
-			return ajax.syncAjax("pagination.do?pageNo=" + pageNo, "json");
+			return util.syncAjax("pagination.do?pageNo=" + pageNo, "json");
 		},
 		render : function(container, pageNo, settings) {
 			var records = this.load(pageNo);
 			container.empty();
+			this.buildTable(container, settings, records);
+			var result = compute(records);
+			this.buildPagination(container, pageNo, settings, records, result[0], result[1]);
+			this.registerActions(records, container);
+		},
+		buildTable : function(container, settings, records) {
 			container.append($("<table class='table table-striped'><tr></tr></table>"));
 			for ( var index = 0; index < settings.titles.length; index++) {
 				var header = $("<th>" + settings.titles[index] + "</th>");
@@ -39,25 +37,23 @@ define([ "custom/ajax", "custom/action" ], function(ajax, action) {
 				var dataRow = $("<tr index=" + row + "></tr>");
 				dataRow.appendTo(container.find("table"));
 				for ( var columnIndex = 0; columnIndex < settings.keys.length; columnIndex++) {
-					var column = $("<td></td>");
 					var value = records.result[row][settings.keys[columnIndex]];
 					if (value instanceof Object) {
 						var text = "";
 						for ( var number = 0; number < value.length; number++) {
 							text += value[number].name + " ";
 						}
-						column.text(text.trim());
-					} else {
-						column.text(value);
+						value = text.trim();
 					}
-					column.appendTo(dataRow);
+					dataRow.append("<td>" + value + "</td>");
 				}
 			}
-			var result = compute(records);
+		},
+		buildPagination : function(container, pageNo, settings, records, start, end) {
 			var pagination = "<li><span>共" + records.totalCount + "条记录</span></li>";
 			pagination += "<li " + (records.pageNo == 1 ? "class='disabled'" : '') + "><a href='#' type='first'>首页</a></li>";
 			pagination += "<li " + (records.pageNo == 1 ? "class='disabled'" : '') + "><a href='#' type='previous'>上一页</a></li>";
-			for ( var index = result[0]; index <= result[1]; index++) {
+			for ( var index = start; index <= end; index++) {
 				pagination += "<li><a href='#' type='page" + index + "'>" + index + "</a></li>";
 			}
 			pagination += "<li " + (records.pageNo == records.totalPages ? "class='disabled'" : '') + "><a href='#' type='next'>下一页</a></li>";
@@ -80,18 +76,13 @@ define([ "custom/ajax", "custom/action" ], function(ajax, action) {
 			$("a[type=last]").click(function() {
 				_this.render(container, records.totalPages, settings);
 			});
-			for ( var index = result[0]; index <= result[1]; index++) {
+			for ( var index = start; index <= end; index++) {
 				var pageLink = $("a[type=page" + index + "]");
 				pageLink.click(function() {
 					_this.render(container, $(this).text(), settings);
 				});
-				if (records.pageNo == index) {
-					pageLink.parent().addClass("active");
-				} else {
-					pageLink.parent().removeClass("active");
-				}
+				records.pageNo == index ? pageLink.parent().addClass("active") : pageLink.parent().removeClass("active");
 			}
-			this.registerActions(records, container);
 		},
 		registerActions : function(records, container) {
 			$("<th>操作</th>").insertAfter(container.find("tr th:last"));

@@ -80,5 +80,6 @@ public class BaseDao<T extends BaseEntity> {
 	public void delete(T entity) {
 		Session session = sessionFactory.getCurrentSession();
 		session.delete(entity);
+		entity.setId(null);
 	}
 }

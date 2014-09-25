@@ -28,6 +28,10 @@ public class BaseService<T extends BaseEntity> {
 	@Autowired
 	private BaseDao<T> baseDao;
 
+	public void setBaseDao(BaseDao<T> baseDao) {
+		this.baseDao = baseDao;
+	}
+
 	private List<BaseCache> cacheList;
 
 	public List<BaseCache> getCacheList() {

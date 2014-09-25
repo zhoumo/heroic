@@ -1,5 +1,5 @@
 require.config({
-	baseUrl : ctx + "/script",
+	baseUrl : "/heroic/script",
 	paths : {
 		"jquery" : "jquery",
 		"jquery.validate" : "jquery.validate",
@@ -10,6 +10,7 @@ require.config({
 			exports : "$"
 		},
 		"jquery.validate" : {
+			exports : "$.fn.validate",
 			deps : [ "jquery" ]
 		},
 		"bootstrap" : {
@@ -20,10 +21,12 @@ require.config({
 	waitSeconds : 0
 });
 define(function() {
-	require([ "jquery", "custom/navbar" ], function($, navbar) {
-		navbar.render($("[type=navbar]"), {
-			logout : ctx + "/j_spring_security_logout",
-			dataUrl : "/resource/getMenus.do"
+	require([ "jquery", "custom/util" ], function($, util) {
+		require([ "custom/navbar" ], function(navbar) {
+			navbar.render($("[type=navbar]"), {
+				logout : util.getContextPath() + "/j_spring_security_logout",
+				dataUrl : "/resource/getMenus.do"
+			});
 		});
 	});
 });

@@ -7,7 +7,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link href="${rc.contextPath}/style/main.css" type="text/css" rel="stylesheet" media="screen" />
 		<script type="text/javascript" src="${rc.contextPath}/script/require.js" data-main="${rc.contextPath}/script/config"></script>
-		<script type="text/javascript">var ctx = "${rc.contextPath}";</script>
 	</head>
 	<body>
 		<div class="container">

@@ -1,26 +1,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Test</title>
+		<title>test</title>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 		<link href="script/jasmine/jasmine.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="script/jasmine/jasmine.js"></script>
 		<script type="text/javascript" src="script/jasmine/jasmine-html.js"></script>
 		<script type="text/javascript" src="script/jasmine/jasmine-boot.js"></script>
 		<script type="text/javascript" src="script/require.js" data-main="script/config"></script>
-		<script type="text/javascript">
-			describe("test: base.js", function() {
-				var base = null;
-				beforeEach(function(done) {
-					require([ "custom/base" ], function(b) {
-						base = b;
-						done();
-					});
-				});
-				it("method: getContextPath", function() {
-					expect(base.getContextPath()).toBe("/heroic");
-				});
-			});
-		</script>
+		<script type="text/javascript" src="script/test/utilTest.js"></script>
 	</head>
 </html>

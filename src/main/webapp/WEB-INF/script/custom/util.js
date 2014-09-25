@@ -1,5 +1,10 @@
-define(function() {
+define([ "jquery" ], function($) {
 	return {
+		getContextPath : function() {
+			var pathName = document.location.pathname;
+			var index = pathName.substr(1).indexOf("/");
+			return pathName.substr(0, index + 1);
+		},
 		syncAjax : function(url, dataType) {
 			var result = null;
 			$.ajax({
