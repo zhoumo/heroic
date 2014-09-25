@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import mine.heroic.common.BaseEntity;
 import mine.heroic.common.annotation.Component;
 import mine.heroic.common.annotation.Key;
-import mine.heroic.common.annotation.Title;
 import mine.heroic.common.annotation.Validate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,13 +22,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @SuppressWarnings("serial")
 public class SysRole extends BaseEntity {
 
-	@Title(value = "角色名")
 	@Component
 	@Validate(required = true)
 	@Column(name = "role_name")
 	private String name;
 
-	@Title(value = "角色标识")
 	@Component
 	@Validate(required = true, unique = true)
 	@Column(name = "role_key")

@@ -11,8 +11,8 @@ describe("test: util.js", function() {
 	});
 	it("method: syncAjax", function() {
 		var custom = tester.syncAjax("/heroic/user/getCustom.do", "json");
-		expect(custom.dataTable).toBeDefined();
+		expect(custom.table).toBeDefined();
 		expect(custom.dialog).toBeDefined();
-		expect(custom.validates).toBeDefined();
+		expect(custom.validate).toBeDefined();
 	});
 });

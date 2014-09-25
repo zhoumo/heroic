@@ -1,1 +1,1 @@
-#pageTemplate("SysResource", "资源")
+#pageTemplate("resource", "资源")

@@ -1,7 +1,5 @@
 /bin
 /target
-/workspaces
-/.settings
 /.git
+/.settings
 /.classpath
-/.springBeans

@@ -29,15 +29,14 @@ define([ "custom/util", "custom/action" ], function(util, action) {
 		},
 		buildTable : function(container, settings, records) {
 			container.append($("<table class='table table-striped'><tr></tr></table>"));
-			for ( var index = 0; index < settings.titles.length; index++) {
-				var header = $("<th>" + settings.titles[index] + "</th>");
-				header.appendTo(container.find("table tr"));
+			for ( var index = 0; index < settings.table.length; index++) {
+				$("<th>" + util.locale(settings.table[index].title, settings.key) + "</th>").appendTo(container.find("table tr"));
 			}
 			for ( var row = 0; row < records.result.length; row++) {
 				var dataRow = $("<tr index=" + row + "></tr>");
 				dataRow.appendTo(container.find("table"));
-				for ( var columnIndex = 0; columnIndex < settings.keys.length; columnIndex++) {
-					var value = records.result[row][settings.keys[columnIndex]];
+				for ( var columnIndex = 0; columnIndex < settings.table.length; columnIndex++) {
+					var value = records.result[row][settings.table[columnIndex].title];
 					if (value instanceof Object) {
 						var text = "";
 						for ( var number = 0; number < value.length; number++) {

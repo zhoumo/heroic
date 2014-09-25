@@ -6,99 +6,62 @@ import java.util.Set;
 
 public class Custom {
 
-	public DataTable dataTable;
+	public String key;
 
-	public Dialog dialog;
+	public List<Column> table;
 
-	public Set<Validate> validates;
+	public List<Element> dialog;
 
-	public DataTable instanceDataTable() {
-		return new DataTable();
+	public Set<Constraint> validate;
+
+	public String getKey() {
+		return key;
 	}
 
-	public DataTable getDataTable() {
-		return dataTable;
+	public void setKey(String key) {
+		this.key = key;
 	}
 
-	public void setDataTable(DataTable dataTable) {
-		this.dataTable = dataTable;
+	public List<Column> getTable() {
+		return table;
 	}
 
-	public Dialog instanceDialog() {
-		return new Dialog();
+	public void setTable(List<Column> table) {
+		this.table = table;
 	}
 
-	public Dialog getDialog() {
+	public List<Element> getDialog() {
 		return dialog;
 	}
 
-	public void setDialog(Dialog dialog) {
+	public void setDialog(List<Element> dialog) {
 		this.dialog = dialog;
 	}
 
-	public Set<Validate> getValidates() {
-		return validates;
+	public Set<Constraint> getValidate() {
+		return validate;
 	}
 
-	public void setValidates(Set<Validate> validates) {
-		this.validates = validates;
+	public void setValidate(Set<Constraint> validate) {
+		this.validate = validate;
 	}
 
-	public class DataTable {
-
-		public List<String> keys;
-
-		public List<String> titles;
-
-		public List<String> getKeys() {
-			return keys;
-		}
-
-		public void setKeys(List<String> keys) {
-			this.keys = keys;
-		}
-
-		public List<String> getTitles() {
-			return titles;
-		}
-
-		public void setTitles(List<String> titles) {
-			this.titles = titles;
-		}
-	}
-
-	public class Dialog {
-
-		public String key;
-
-		public List<Layout> layout;
-
-		public String getKey() {
-			return key;
-		}
-
-		public void setKey(String key) {
-			this.key = key;
-		}
-
-		public List<Layout> getLayout() {
-			return layout;
-		}
-
-		public void setLayout(List<Layout> layout) {
-			this.layout = layout;
-		}
-	}
-
-	public Layout instanceLayout() {
-		return new Layout();
-	}
-
-	public class Layout {
+	public static class Column {
 
 		public String title;
 
-		public String key;
+		public String getTitle() {
+			return title;
+		}
+
+		public void setTitle(String title) {
+			this.title = title;
+		}
+	}
+
+	public static class Element {
+
+		public String title;
 
 		public String type;
 
@@ -114,14 +77,6 @@ public class Custom {
 
 		public void setTitle(String title) {
 			this.title = title;
-		}
-
-		public String getKey() {
-			return key;
-		}
-
-		public void setKey(String key) {
-			this.key = key;
 		}
 
 		public String getType() {
@@ -157,11 +112,7 @@ public class Custom {
 		}
 	}
 
-	public Validate instanceValidate() {
-		return new Validate();
-	}
-
-	public class Validate {
+	public static class Constraint {
 
 		public String key;
 

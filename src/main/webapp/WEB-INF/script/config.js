@@ -3,7 +3,9 @@ require.config({
 	paths : {
 		"jquery" : "jquery",
 		"jquery.validate" : "jquery.validate",
-		"bootstrap" : "bootstrap"
+		"bootstrap" : "bootstrap",
+		"text" : "require.plugin.text",
+		"i18n" : "require.plugin.i18n"
 	},
 	shim : {
 		"jquery" : {

@@ -1,1 +1,1 @@
-#pageTemplate("SysRole", "角色")
+#pageTemplate("role", "角色")

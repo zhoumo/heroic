@@ -15,7 +15,6 @@ import javax.persistence.Table;
 import mine.heroic.common.BaseEntity;
 import mine.heroic.common.annotation.Component;
 import mine.heroic.common.annotation.Key;
-import mine.heroic.common.annotation.Title;
 import mine.heroic.common.annotation.Validate;
 
 @Entity
@@ -24,13 +23,11 @@ import mine.heroic.common.annotation.Validate;
 @SuppressWarnings("serial")
 public class SysUser extends BaseEntity {
 
-	@Title(value = "用户标识")
 	@Component
 	@Validate(required = true, unique = true)
 	@Column(name = "user_name")
 	private String name;
 
-	@Title(value = "密码")
 	@Component
 	@Validate(required = true, minLength = 6)
 	@Column(name = "password")
@@ -42,7 +39,6 @@ public class SysUser extends BaseEntity {
 	@Column(name = "birthday")
 	private String birthday;
 
-	@Title(value = "赋予角色")
 	@Component(type = Component.SELECTOR, url = "role/getAll.do")
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinTable(name = "sys_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })

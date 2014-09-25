@@ -17,6 +17,10 @@ public @interface Component {
 
 	public static final String SELECTOR = "SELECTOR";
 
+	boolean table() default true;
+
+	boolean dialog() default true;
+
 	String key() default "";
 
 	String type() default INPUT;

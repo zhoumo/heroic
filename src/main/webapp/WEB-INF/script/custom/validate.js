@@ -15,14 +15,14 @@ define([ "jquery.validate" ], function() {
 		};
 	}
 	return {
-		register : function(key, settings) {
+		register : function(settings) {
 			var _this = this;
-			$("#" + key + "Form").validate({
+			$("#" + settings.key + "Form").validate({
 				submitHandler : function(form) {
 					form.submit();
 				},
-				messages : _this.validateMessages(settings),
-				rules : _this.validateRules(settings)
+				messages : _this.validateMessages(settings.validate),
+				rules : _this.validateRules(settings.validate)
 			});
 		},
 		validateRules : function validateRules(settings) {

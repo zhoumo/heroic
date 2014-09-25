@@ -1,8 +1,8 @@
 define([ "custom/util", "custom/selector", "bootstrap" ], function(util, selector) {
-	function buildDialog(container, settings) {
+	function buildDialog(container, key) {
 		var dialog = $("<div class='modal-dialog' style='width:600px'></div>");
 		var content = $("<div class='modal-content'></div>");
-		var form = $("<form id='" + settings.key + "Form' action='save.do' method='post'></form>");
+		var form = $("<form id='" + key + "Form' action='save.do' method='post'></form>");
 		var body = $("<div class='modal-body'></div>");
 		body.append($("<input id='id' name='id' type='hidden' />"));
 		dialog.appendTo(container);
@@ -21,24 +21,24 @@ define([ "custom/util", "custom/selector", "bootstrap" ], function(util, selecto
 		render : function(container, settings) {
 			container.addClass("modal fade");
 			container.attr("data-backdrop", "static");
-			var body = buildDialog(container, settings);
-			for ( var index = 0; index < settings.layout.length; index++) {
+			var body = buildDialog(container, settings.key);
+			for ( var index = 0; index < settings.dialog.length; index++) {
 				var control = $("<div class='controls'></div>");
 				control.appendTo(body);
-				control.append($("<label class='control-label' style='width:80px;height:50px' for='input'>" + settings.layout[index].title + "：</label>"));
-				if (settings.layout[index].type == "INPUT") {
-					var input = $("<input placeholder='输入" + settings.layout[index].title + "' class='form-control' style='width:300px' type='text' />");
-					this.setKey(input, settings.layout[index].key);
+				control.append($("<label class='control-label' style='width:80px;height:50px' for='input'>" + util.locale(settings.dialog[index].title, settings.key) + "：</label>"));
+				if (settings.dialog[index].type == "INPUT") {
+					var input = $("<input placeholder='输入" + settings.dialog[index].title + "' class='form-control' style='width:300px' type='text' />");
+					this.setKey(input, settings.dialog[index].title);
 					input.appendTo(control);
-				} else if (settings.layout[index].type == "SELECT") {
+				} else if (settings.dialog[index].type == "SELECT") {
 					var select = $("<select class='form-control' style='width:150px'></select>");
-					this.setKey(select, settings.layout[index].key);
-					var text = settings.layout[index].text;
-					var value = settings.layout[index].value;
-					if (settings.layout[index].url != "") {
-						var textField = settings.layout[index].text;
-						var valueField = settings.layout[index].value;
-						var data = util.syncAjax(settings.layout[index].url, "jsonp");
+					this.setKey(select, settings.dialog[index].title);
+					var text = settings.dialog[index].text;
+					var value = settings.dialog[index].value;
+					if (settings.dialog[index].url != "") {
+						var textField = settings.dialog[index].text;
+						var valueField = settings.dialog[index].value;
+						var data = util.syncAjax(settings.dialog[index].url, "jsonp");
 						text = new Array(), value = new Array();
 						for ( var item = 0; item < data.length; item++) {
 							text[item] = data[item][textField];
@@ -49,8 +49,8 @@ define([ "custom/util", "custom/selector", "bootstrap" ], function(util, selecto
 						$("<option value='" + value[item] + "'>" + text[item] + "</option>").appendTo(select);
 					}
 					select.appendTo(control);
-				} else if (settings.layout[index].type == "SELECTOR") {
-					selector.render(settings.layout[index].url, control);
+				} else if (settings.dialog[index].type == "SELECTOR") {
+					selector.render(settings.dialog[index].url, control);
 				}
 			}
 		}

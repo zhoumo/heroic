@@ -7,7 +7,7 @@ define([ "jquery", "custom/util" ], function($, util) {
 				custom : util.syncAjax("getCustom.do", "json")
 			};
 			this.buildToolbar(settings);
-			this.buildDatatable(settings);
+			this.buildTable(settings);
 			this.buildDialog(settings);
 			this.buildValidate(settings);
 		},
@@ -16,19 +16,19 @@ define([ "jquery", "custom/util" ], function($, util) {
 				toolbar.render($("[type=toolbar]"), settings);
 			});
 		},
-		buildDatatable : function(settings) {
-			require([ "custom/datatable" ], function(datatable) {
-				datatable.render($("[type=datatable]").filter("[key=" + settings.key + "]"), 1, settings.custom.dataTable);
+		buildTable : function(settings) {
+			require([ "custom/table" ], function(table) {
+				table.render($("[type=table]").filter("[key=" + settings.key + "]"), 1, settings.custom);
 			});
 		},
 		buildDialog : function(settings) {
 			require([ "custom/dialog" ], function(dialog) {
-				dialog.render($("[type=dialog]").filter("[key=" + settings.key + "]"), settings.custom.dialog);
+				dialog.render($("[type=dialog]").filter("[key=" + settings.key + "]"), settings.custom);
 			});
 		},
 		buildValidate : function(settings) {
 			require([ "custom/validate" ], function(validate) {
-				validate.register(settings.key, settings.custom.validates);
+				validate.register(settings.custom);
 			});
 		}
 	};

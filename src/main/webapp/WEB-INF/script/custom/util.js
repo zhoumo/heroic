@@ -1,4 +1,4 @@
-define([ "jquery" ], function($) {
+define([ "jquery", "i18n!nls/locale" ], function($, locale) {
 	return {
 		getContextPath : function() {
 			var pathName = document.location.pathname;
@@ -20,6 +20,10 @@ define([ "jquery" ], function($) {
 				}
 			});
 			return result;
+		},
+		locale : function(text, key) {
+			var value = locale[key + "-" + text];
+			return value == null ? text : value;
 		}
 	};
 });
