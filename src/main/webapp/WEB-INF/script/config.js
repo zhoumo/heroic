@@ -4,6 +4,7 @@ require.config({
 		"jquery" : "jquery",
 		"jquery.validate" : "jquery.validate",
 		"bootstrap" : "bootstrap",
+		"bootstrap.plugin" : "bootstrap.plugin",
 		"text" : "require.plugin.text",
 		"i18n" : "require.plugin.i18n"
 	},
@@ -18,17 +19,20 @@ require.config({
 		"bootstrap" : {
 			exports : "$.fn.popover",
 			deps : [ "jquery" ]
+		},
+		"bootstrap.plugin" : {
+			exports : "$.fn.popover",
+			deps : [ "jquery", "bootstrap" ]
 		}
 	},
 	waitSeconds : 0
 });
 define(function() {
-	require([ "jquery", "custom/util" ], function($, util) {
-		require([ "custom/navbar" ], function(navbar) {
-			navbar.render($("[type=navbar]"), {
-				logout : util.getContextPath() + "/j_spring_security_logout",
-				dataUrl : "/resource/getMenus.do"
-			});
+	require([ "jquery", "bootstrap.plugin" ], function($) {
+		$("div[type=navbar]").navbar({
+			dataUrl : "/resource/getMenus.do",
+			dataType : "jsonp",
+			logoutUrl : "/j_spring_security_logout"
 		});
 	});
 });

@@ -15,7 +15,7 @@ define([ "jquery.validate" ], function() {
 		};
 	}
 	return {
-		register : function(settings) {
+		bind : function(settings) {
 			var _this = this;
 			$("#" + settings.key + "Form").validate({
 				submitHandler : function(form) {

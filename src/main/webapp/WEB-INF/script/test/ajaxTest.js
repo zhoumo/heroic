@@ -1,16 +1,11 @@
 describe("test: util.js", function() {
-	var tester = null;
 	beforeEach(function(done) {
-		require([ "custom/util" ], function(util) {
-			tester = util;
+		require([ "jquery", "bootstrap.plugin" ], function() {
 			done();
 		});
 	});
 	it("method: getContextPath", function() {
-		expect(tester.getContextPath()).toBe("/heroic");
-	});
-	it("method: syncAjax", function() {
-		var custom = tester.syncAjax("/heroic/user/getCustom.do", "json");
+		var custom = $.load("/heroic/user/getCustom.do", "json");
 		expect(custom.table).toBeDefined();
 		expect(custom.dialog).toBeDefined();
 		expect(custom.validate).toBeDefined();

@@ -1,12 +1,4 @@
-define(function() {
-	function deleteSuccess() {
-		location.reload();
-	}
-	function deleteError(request) {
-		if (request.status == 405) {
-			alert("存在关联，不能删除！");
-		}
-	}
+define([ "jquery" ], function($) {
 	return {
 		remove : {
 			icon : "glyphicon glyphicon-trash",
@@ -17,8 +9,14 @@ define(function() {
 				$.ajax({
 					type : "post",
 					url : "delete.do?id=" + record.id,
-					success : deleteSuccess,
-					error : deleteError
+					success : function() {
+						location.reload();
+					},
+					error : function(request) {
+						if (request.status == 405) {
+							alert("存在关联，不能删除！");
+						}
+					}
 				});
 			}
 		},
