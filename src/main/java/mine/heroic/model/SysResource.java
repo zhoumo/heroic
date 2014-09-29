@@ -1,6 +1,6 @@
 package mine.heroic.model;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -54,7 +54,7 @@ public class SysResource extends BaseEntity {
 	@Component(type = Component.SELECTOR, url = "role/getAll.do")
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinTable(name = "sys_resource_role", joinColumns = { @JoinColumn(name = "resource_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
-	private Set<SysRole> roles;
+	private List<SysRole> roles;
 
 	public String getName() {
 		return name;
@@ -96,11 +96,11 @@ public class SysResource extends BaseEntity {
 		this.url = url;
 	}
 
-	public Set<SysRole> getRoles() {
+	public List<SysRole> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<SysRole> roles) {
+	public void setRoles(List<SysRole> roles) {
 		this.roles = roles;
 	}
 }

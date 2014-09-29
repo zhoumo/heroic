@@ -34,7 +34,7 @@ public class UserDetailService implements UserDetailsService {
 
 	private Set<GrantedAuthority> obtainGrantedAuthorities(SysUser user) {
 		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-		Set<SysRole> roles = user.getRoles();
+		List<SysRole> roles = user.getRoles();
 		for (SysRole role : roles) {
 			authorities.add(new GrantedAuthorityImpl(role.getKey()));
 		}

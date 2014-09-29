@@ -29,6 +29,7 @@ public abstract class BaseCache {
 			builder.append("@");
 			builder.append(entity.getId());
 		}
+		logger.debug("cache key: " + builder.toString());
 		return builder.toString();
 	}
 }

@@ -1,10 +1,10 @@
-describe("test: util.js", function() {
+describe("Describe: ajax", function() {
 	beforeEach(function(done) {
 		require([ "jquery", "bootstrap.plugin" ], function() {
 			done();
 		});
 	});
-	it("method: getContextPath", function() {
+	it("Goal: test [getCustom.do]", function() {
 		var custom = $.load("/heroic/user/getCustom.do", "json");
 		expect(custom.table).toBeDefined();
 		expect(custom.dialog).toBeDefined();

@@ -1,6 +1,6 @@
 package mine.heroic.controller;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,7 +22,7 @@ public class UserController extends CrudController<SysUser> {
 
 	@Override
 	protected void beforeSaveOrUpdate(SysUser sysUser, HttpServletRequest request) {
-		Set<SysRole> roles = this.baseService.createCollectionsByIds(new SysRole(), this.selectedIds);
+		List<SysRole> roles = this.baseService.createCollectionsByIds(new SysRole(), this.selectedIds);
 		sysUser.setRoles(roles);
 	}
 }

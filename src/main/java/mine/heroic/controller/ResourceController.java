@@ -3,7 +3,6 @@ package mine.heroic.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,7 +30,7 @@ public class ResourceController extends CrudController<SysResource> {
 
 	@Override
 	protected void beforeSaveOrUpdate(SysResource sysResource, HttpServletRequest request) {
-		Set<SysRole> roles = this.baseService.createCollectionsByIds(new SysRole(), this.selectedIds);
+		List<SysRole> roles = this.baseService.createCollectionsByIds(new SysRole(), this.selectedIds);
 		sysResource.setRoles(roles);
 	}
 

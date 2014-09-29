@@ -1,7 +1,6 @@
 package mine.heroic.model;
 
-import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,7 +33,7 @@ public class SysUser extends BaseEntity {
 	private String password;
 
 	@Column(name = "email")
-	private Date email;
+	private String email;
 
 	@Column(name = "birthday")
 	private String birthday;
@@ -42,7 +41,7 @@ public class SysUser extends BaseEntity {
 	@Component(type = Component.SELECTOR, url = "role/getAll.do")
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinTable(name = "sys_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
-	private Set<SysRole> roles;
+	private List<SysRole> roles;
 
 	public String getName() {
 		return name;
@@ -60,11 +59,11 @@ public class SysUser extends BaseEntity {
 		this.password = password;
 	}
 
-	public Date getEmail() {
+	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(Date email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
@@ -76,11 +75,11 @@ public class SysUser extends BaseEntity {
 		this.birthday = birthday;
 	}
 
-	public Set<SysRole> getRoles() {
+	public List<SysRole> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<SysRole> roles) {
+	public void setRoles(List<SysRole> roles) {
 		this.roles = roles;
 	}
 }

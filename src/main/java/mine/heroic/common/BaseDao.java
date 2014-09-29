@@ -24,6 +24,7 @@ public class BaseDao<T extends BaseEntity> {
 
 	private Query createQuery(String queryString, Object... values) {
 		Session session = sessionFactory.getCurrentSession();
+		logger.debug("query: " + queryString);
 		Query query = session.createQuery(queryString);
 		if (values != null) {
 			for (int i = 0; i < values.length; i++) {

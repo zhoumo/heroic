@@ -57,7 +57,7 @@
 			buildDialog(body, settings);
 		},
 		selector : function(settings) {
-			var selectedIds = $("<input type='hidden' name='selectedIds' value='|' />");
+			var selectedIds = $("<input type='hidden' name='selectedIds' value=' ' />");
 			selectedIds.appendTo($(this));
 			var select = $("<select class='form-control' style='width:150px'></select>");
 			var data = load(settings.url, "jsonp");
@@ -73,12 +73,12 @@
 			addButton.click(function() {
 				$(".repeatWarn").remove();
 				var id = select.val();
-				if (selectedIds.val().indexOf("|" + id + "|") == -1) {
-					selectedIds.val(selectedIds.val() + id + "|");
+				if (selectedIds.val().indexOf(" " + id + " ") == -1) {
+					selectedIds.val(selectedIds.val() + id + " ");
 					var item = $("<div style='padding-top:5px;padding-left:80px'></div>");
 					var deleteButton = $("<button class='btn btn-primary btn-sm' type='button'></button>");
 					deleteButton.click(function() {
-						selectedIds.val(selectedIds.val().replace("|" + id + "|", "|"));
+						selectedIds.val(selectedIds.val().replace(" " + id + " ", " "));
 						item.remove();
 					});
 					deleteButton.append($("<span class='glyphicon glyphicon-trash'></span>"));

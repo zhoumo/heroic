@@ -27,7 +27,7 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
 	@Autowired
 	private BaseService<SysResource> baseService;
 
-	public void loadResource(Boolean enforce) {
+	public synchronized void loadResource(Boolean enforce) {
 		if (resourceMap == null || enforce) {
 			resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
 			List<SysResource> resources = baseService.findAll(SysResource.class);

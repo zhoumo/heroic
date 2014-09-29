@@ -1,53 +1,54 @@
 define([ "jquery", "bootstrap.plugin" ], function($) {
+	var context = null;
+	var settings = null;
 	return {
-		build : function(key, title) {
-			var settings = {
+		build : function(key, title, ctx) {
+			context = ctx || "";
+			settings = {
 				key : key,
 				title : title,
-				custom : $.load("getCustom.do", "json")
+				custom : $.load(context + "getCustom.do", "json")
 			};
-			this.createToolbar(settings);
-			this.createTable(settings);
-			this.createDialog(settings);
-			this.bindValidate(settings);
+			this.createToolbar();
+			this.createTable();
+			this.createDialog();
+			this.bindValidate();
 			this.internationalize();
 		},
-		createToolbar : function(settings) {
+		getSettings : function() {
+			return settings;
+		},
+		createToolbar : function() {
 			var button = $("<button class='btn btn-primary' style='width:100%'>新建" + settings.title + "</button>");
 			button.click(function() {
 				$("[type=dialog]").filter("[key=" + settings.key + "]").modal();
 			});
 			$("[type=toolbar]").append(button);
-			return button;
 		},
-		createTable : function(settings) {
+		createTable : function() {
 			require([ "custom/actions" ], function(actions) {
 				$("[type=table]").filter("[key=" + settings.key + "]").table({
-					url : "pagination.do?pageNo=",
+					url : context + "pagination.do?pageNo=",
 					pageNo : 1,
 					custom : settings.custom,
 					action : [ actions.remove, actions.update ]
 				});
 			});
 		},
-		createDialog : function(settings) {
+		createDialog : function() {
 			$("[type=dialog]").filter("[key=" + settings.key + "]").dialog({
 				key : settings.key,
 				dialog : settings.custom.dialog
 			});
 		},
-		bindValidate : function(settings) {
+		bindValidate : function() {
 			require([ "custom/validate" ], function(validate) {
 				validate.bind(settings.custom);
 			});
 		},
 		internationalize : function() {
 			require([ "i18n!nls/locale" ], function(locale) {
-				$("th").each(function() {
-					var key = $(this).attr("key");
-					$(this).text(locale[key + "-" + $(this).text()]);
-				});
-				$("label").each(function() {
+				$("th, label").each(function() {
 					var key = $(this).attr("key");
 					$(this).text(locale[key + "-" + $(this).text()]);
 				});

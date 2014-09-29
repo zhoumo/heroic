@@ -13,7 +13,9 @@ public class PropertiesUtil {
 	private void readFile(String filePath) {
 		properties = new Properties();
 		try {
-			properties.load(new FileInputStream(this.getClass().getResource(filePath).getFile()));
+			FileInputStream fileInputStream = new FileInputStream(this.getClass().getResource(filePath).getFile());
+			properties.load(fileInputStream);
+			fileInputStream.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

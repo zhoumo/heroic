@@ -1,15 +1,12 @@
 package mine.heroic.common.service;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import mine.heroic.common.BaseDao;
 import mine.heroic.common.BaseEntity;
 import mine.heroic.common.cache.BaseCache;
-import mine.heroic.util.StringUtil;
 import mine.heroic.vo.Page;
 
 import org.slf4j.Logger;
@@ -49,6 +46,7 @@ public class BaseService<T extends BaseEntity> {
 	}
 
 	public void saveOrUpdate(T entity) {
+		baseDao.saveOrUpdate(entity);
 		if (cacheList != null) {
 			for (BaseCache baseCache : cacheList) {
 				String key = baseCache.getKey(entity);
@@ -57,10 +55,10 @@ public class BaseService<T extends BaseEntity> {
 				}
 			}
 		}
-		baseDao.saveOrUpdate(entity);
 	}
 
 	public void delete(T entity) {
+		baseDao.delete(entity);
 		if (cacheList != null) {
 			for (BaseCache baseCache : cacheList) {
 				String key = baseCache.getKey(entity);
@@ -69,7 +67,6 @@ public class BaseService<T extends BaseEntity> {
 				}
 			}
 		}
-		baseDao.delete(entity);
 	}
 
 	public BaseEntity get(Long id, Class<?> clazz) {
@@ -88,14 +85,10 @@ public class BaseService<T extends BaseEntity> {
 		if (id != null) {
 			try {
 				Object obj = get(id, clazz);
-				Method method = obj.getClass().getMethod("get" + StringUtil.upperFirstLetter(field));
+				Method method = obj.getClass().getMethod("get" + field.replaceFirst(field.substring(0, 1), field.substring(0, 1).toUpperCase()));
 				oldValue = method.invoke(obj, new Object[0]).toString();
-			} catch (NoSuchMethodException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
+			} catch (Exception e) {
+				logger.error("can not find old value.", e);
 			}
 		}
 		StringBuilder builder = new StringBuilder("from ");
@@ -112,14 +105,14 @@ public class BaseService<T extends BaseEntity> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <E> Set<E> createCollectionsByIds(E entity, String ids) {
-		Set<E> set = new HashSet<E>();
-		for (String id : ids.split(",")) {
+	public <E> List<E> createCollectionsByIds(E entity, String ids) {
+		List<E> list = new ArrayList<E>();
+		for (String id : ids.split(" ")) {
 			if (StringUtils.isEmpty(id)) {
 				continue;
 			}
-			set.add((E) get(Long.parseLong(id), entity.getClass()));
+			list.add((E) get(Long.parseLong(id), entity.getClass()));
 		}
-		return set;
+		return list;
 	}
 }

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import mine.heroic.common.BaseEntity;
 import mine.heroic.common.service.BaseService;
 import mine.heroic.common.service.CustomService;
-import mine.heroic.util.StringUtil;
 import mine.heroic.vo.Page;
 
 import org.apache.commons.lang.StringUtils;
@@ -72,8 +71,8 @@ public abstract class CrudController<T extends BaseEntity> extends BaseControlle
 	@RequestMapping("/save.do")
 	protected String saveOrUpdate(@ModelAttribute T entity, HttpServletRequest request) {
 		configure();
-		this.selectedIds = request.getParameter("selectedIds") == null ? "" : request.getParameter("selectedIds");
-		this.selectedIds = StringUtil.convertCommaSeparated(this.selectedIds, "\\|");
+		this.selectedIds = request.getParameter("selectedIds");
+		this.selectedIds = (this.selectedIds == null ? "" : this.selectedIds.trim());
 		beforeSaveOrUpdate(entity, request);
 		baseService.saveOrUpdate(entity);
 		afterSaveOrUpdate(entity, request);
