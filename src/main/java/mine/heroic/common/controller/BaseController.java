@@ -17,13 +17,13 @@ public abstract class BaseController {
 
 	protected Map<String, Object> model = new HashMap<String, Object>();
 
+	protected abstract void configure();
+
 	public void setModel(Map<String, Object> model) {
 		this.model = model;
 	}
 
-	protected abstract void configure();
-
-	protected void jsonpCallback(HttpServletResponse response, String callback, Object value) throws IOException {
+	public void jsonpCallback(HttpServletResponse response, String callback, Object value) throws IOException {
 		StringBuilder builder = new StringBuilder(callback);
 		builder.append("(");
 		builder.append(BeanUtil.convertBeanToJson(value));

@@ -29,39 +29,59 @@ public abstract class CrudController<T extends BaseEntity> extends BaseControlle
 
 	protected Class<T> clazz;
 
-	public CrudController() {
-		this.clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-	}
+	protected String selectedIds = StringUtils.EMPTY;
+
+	protected String index = StringUtils.EMPTY;
+
+	protected String saveReturn = "redirect:index.do";
+
+	protected String deleteReturn = "redirect:index.do";
 
 	protected void setIndex(String index) {
 		this.index = index;
 	}
 
-	protected String saveReturn = "redirect:index.do";
-
 	protected void setSaveReturn(String saveReturn) {
 		this.saveReturn = saveReturn;
 	}
-
-	protected String deleteReturn = "redirect:index.do";
 
 	protected void setDeleteReturn(String deleteReturn) {
 		this.deleteReturn = deleteReturn;
 	}
 
-	protected String selectedIds = StringUtils.EMPTY;
+	protected void beforeSaveOrUpdate(@ModelAttribute T entity, HttpServletRequest request) {
+	}
 
-	protected String index = StringUtils.EMPTY;
+	protected void afterSaveOrUpdate(@ModelAttribute T entity, HttpServletRequest request) {
+	}
+
+	protected void beforeDelete(@ModelAttribute T entity, HttpServletRequest request) {
+	}
+
+	protected void afterDelete(@ModelAttribute T entity, HttpServletRequest request) {
+	}
+
+	public CrudController() {
+		this.clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+	}
+
+	public void setBaseService(BaseService<T> baseService) {
+		this.baseService = baseService;
+	}
+
+	public void setCustomService(CustomService<T> customService) {
+		this.customService = customService;
+	}
 
 	@RequestMapping("/index.do")
-	protected ModelAndView index() {
+	public ModelAndView index() {
 		configure();
 		return new ModelAndView(this.index, this.model);
 	}
 
 	@RequestMapping("/pagination.do")
 	@ResponseBody
-	protected Page<T> pagination(Page<T> page) {
+	public Page<T> pagination(Page<T> page) {
 		if (page.getPageSize() < 1) {
 			page.setPageSize(10);
 		}
@@ -69,7 +89,7 @@ public abstract class CrudController<T extends BaseEntity> extends BaseControlle
 	}
 
 	@RequestMapping("/save.do")
-	protected String saveOrUpdate(@ModelAttribute T entity, HttpServletRequest request) {
+	public String saveOrUpdate(@ModelAttribute T entity, HttpServletRequest request) {
 		configure();
 		this.selectedIds = request.getParameter("selectedIds");
 		this.selectedIds = (this.selectedIds == null ? "" : this.selectedIds.trim());
@@ -79,14 +99,8 @@ public abstract class CrudController<T extends BaseEntity> extends BaseControlle
 		return this.saveReturn;
 	}
 
-	protected void beforeSaveOrUpdate(@ModelAttribute T entity, HttpServletRequest request) {
-	}
-
-	protected void afterSaveOrUpdate(@ModelAttribute T entity, HttpServletRequest request) {
-	}
-
 	@RequestMapping("/delete.do")
-	protected String delete(@ModelAttribute T entity, HttpServletRequest request) {
+	public String delete(@ModelAttribute T entity, HttpServletRequest request) {
 		configure();
 		beforeDelete(entity, request);
 		baseService.delete(entity);
@@ -94,20 +108,14 @@ public abstract class CrudController<T extends BaseEntity> extends BaseControlle
 		return this.deleteReturn;
 	}
 
-	protected void beforeDelete(@ModelAttribute T entity, HttpServletRequest request) {
-	}
-
-	protected void afterDelete(@ModelAttribute T entity, HttpServletRequest request) {
-	}
-
 	@RequestMapping("/get.do")
 	@ResponseBody
-	protected BaseEntity get(Long id) {
+	public BaseEntity get(Long id) {
 		return baseService.get(id, clazz);
 	}
 
 	@RequestMapping("/getAll.do")
-	protected void getAll(String callback, HttpServletResponse response) {
+	public void getAll(String callback, HttpServletResponse response) {
 		try {
 			jsonpCallback(response, callback, baseService.findAll(clazz));
 		} catch (IOException e) {
@@ -117,13 +125,13 @@ public abstract class CrudController<T extends BaseEntity> extends BaseControlle
 
 	@RequestMapping("/checkUnique.do")
 	@ResponseBody
-	protected boolean checkUnique(String field, String value, Long id) {
+	public boolean checkUnique(String field, String value, Long id) {
 		return baseService.checkUnique(field, value, id, clazz);
 	}
 
 	@RequestMapping("/getCustom.do")
 	@ResponseBody
-	protected String getCustom() {
+	public String getCustom() {
 		String json = "";
 		try {
 			json = customService.resolveCustom(clazz);

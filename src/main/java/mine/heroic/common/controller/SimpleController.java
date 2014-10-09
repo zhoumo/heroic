@@ -13,7 +13,7 @@ public abstract class SimpleController extends BaseController {
 	}
 
 	@RequestMapping("/")
-	protected ModelAndView homePage() {
+	public ModelAndView homePage() {
 		configure();
 		return new ModelAndView(homePage, model);
 	}
