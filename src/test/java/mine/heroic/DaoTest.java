@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/spring/applicationContext.xml")
-public class baseDaoTest {
+public class DaoTest {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -44,7 +44,7 @@ public class baseDaoTest {
 		List<SysUser> userList = userDao.findAll(SysUser.class.getName());
 		logger.info("find all user size : " + userList.size());
 		for (SysUser user : userList) {
-			logger.info("delete user[id=" + user.getId() + "]");
+			logger.info("delete user[name=" + user.getName() + "]");
 			userDao.delete(user);
 			Assert.assertNull(user.getId());
 		}

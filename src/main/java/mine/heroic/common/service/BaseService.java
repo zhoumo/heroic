@@ -6,7 +6,6 @@ import java.util.List;
 
 import mine.heroic.common.BaseDao;
 import mine.heroic.common.BaseEntity;
-import mine.heroic.common.cache.BaseCache;
 import mine.heroic.vo.Page;
 
 import org.slf4j.Logger;
@@ -29,16 +28,6 @@ public class BaseService<T extends BaseEntity> {
 		this.baseDao = baseDao;
 	}
 
-	private List<BaseCache> cacheList;
-
-	public List<BaseCache> getCacheList() {
-		return cacheList;
-	}
-
-	public void setCacheList(List<BaseCache> cacheList) {
-		this.cacheList = cacheList;
-	}
-
 	public Page<T> pagination(Page<T> page, Class<T> clazz) {
 		StringBuilder builder = new StringBuilder("from ");
 		builder.append(clazz.getName()).append(" order by id desc");
@@ -47,26 +36,10 @@ public class BaseService<T extends BaseEntity> {
 
 	public void saveOrUpdate(T entity) {
 		baseDao.saveOrUpdate(entity);
-		if (cacheList != null) {
-			for (BaseCache baseCache : cacheList) {
-				String key = baseCache.getKey(entity);
-				if (baseCache.available(entity.getClass())) {
-					baseCache.add(key, entity);
-				}
-			}
-		}
 	}
 
 	public void delete(T entity) {
 		baseDao.delete(entity);
-		if (cacheList != null) {
-			for (BaseCache baseCache : cacheList) {
-				String key = baseCache.getKey(entity);
-				if (baseCache.available(entity.getClass())) {
-					baseCache.delete(key);
-				}
-			}
-		}
 	}
 
 	public BaseEntity get(Long id, Class<?> clazz) {

@@ -3,7 +3,7 @@ describe("Describe: builder", function() {
 	beforeEach(function(done) {
 		require([ "custom/builder" ], function(builder) {
 			tester = builder;
-			settings = tester.build("user", "用户", "user/");
+			tester.build("user", "用户", "user/");
 			done();
 		});
 	});
@@ -17,5 +17,10 @@ describe("Describe: builder", function() {
 	});
 	it("Goal: [settings.key] to be 'user'", function() {
 		expect(tester.getSettings().key).toBe("user");
+	});
+	it("Goal: method [createToolbar] works", function() {
+		setFixtures('<div type="toolbar" />');
+		tester.createToolbar();
+		expect($("[type=toolbar]").text()).toBe("新建用户");
 	});
 });

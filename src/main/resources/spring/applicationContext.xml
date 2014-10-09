@@ -22,7 +22,6 @@
 		<context:exclude-filter type="regex" expression=".controller.*" />
 	</context:component-scan>
 	<import resource="applicationContext-db.xml" />
-	<import resource="applicationContext-heroic.xml" />
 	<import resource="applicationContext-security.xml" />
 	<import resource="applicationContext-velocity.xml" />
 </beans>

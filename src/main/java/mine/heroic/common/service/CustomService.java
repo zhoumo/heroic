@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import mine.heroic.common.BaseEntity;
-import mine.heroic.common.annotation.Component;
+import mine.heroic.common.annotation.Render;
 import mine.heroic.common.annotation.Key;
 import mine.heroic.common.annotation.Validate;
 import mine.heroic.util.BeanUtil;
@@ -33,7 +33,7 @@ public class CustomService<T extends BaseEntity> {
 	private void buildTable(Custom custom, Class<T> clazz) {
 		List<Custom.Column> table = new ArrayList<Custom.Column>();
 		for (Field field : clazz.getDeclaredFields()) {
-			if (field.isAnnotationPresent(Component.class) && field.getAnnotation(Component.class).table()) {
+			if (field.isAnnotationPresent(Render.class) && field.getAnnotation(Render.class).table()) {
 				Custom.Column column = new Custom.Column();
 				column.setTitle(field.getName());
 				table.add(column);
@@ -45,8 +45,8 @@ public class CustomService<T extends BaseEntity> {
 	private void buildDialog(Custom custom, Class<T> clazz) {
 		List<Custom.Element> dialog = new ArrayList<Custom.Element>();
 		for (Field field : clazz.getDeclaredFields()) {
-			if (field.isAnnotationPresent(Component.class) && field.getAnnotation(Component.class).dialog()) {
-				Component componentAnnotation = field.getAnnotation(Component.class);
+			if (field.isAnnotationPresent(Render.class) && field.getAnnotation(Render.class).dialog()) {
+				Render componentAnnotation = field.getAnnotation(Render.class);
 				Custom.Element element = new Custom.Element();
 				element.setTitle(field.getName());
 				element.setType(componentAnnotation.type());

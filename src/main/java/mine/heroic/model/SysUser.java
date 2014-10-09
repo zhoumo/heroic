@@ -12,7 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import mine.heroic.common.BaseEntity;
-import mine.heroic.common.annotation.Component;
+import mine.heroic.common.annotation.Render;
 import mine.heroic.common.annotation.Key;
 import mine.heroic.common.annotation.Validate;
 
@@ -22,12 +22,12 @@ import mine.heroic.common.annotation.Validate;
 @SuppressWarnings("serial")
 public class SysUser extends BaseEntity {
 
-	@Component
+	@Render
 	@Validate(required = true, unique = true)
 	@Column(name = "user_name")
 	private String name;
 
-	@Component
+	@Render
 	@Validate(required = true, minLength = 6)
 	@Column(name = "password")
 	private String password;
@@ -38,7 +38,7 @@ public class SysUser extends BaseEntity {
 	@Column(name = "birthday")
 	private String birthday;
 
-	@Component(type = Component.SELECTOR, url = "role/getAll.do")
+	@Render(type = Render.SELECTOR, url = "role/getAll.do")
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinTable(name = "sys_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	private List<SysRole> roles;

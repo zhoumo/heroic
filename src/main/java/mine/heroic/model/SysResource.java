@@ -12,7 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import mine.heroic.common.BaseEntity;
-import mine.heroic.common.annotation.Component;
+import mine.heroic.common.annotation.Render;
 import mine.heroic.common.annotation.Key;
 import mine.heroic.common.annotation.Validate;
 
@@ -26,32 +26,32 @@ public class SysResource extends BaseEntity {
 
 	public static final String TYPE_REQUEST = "REQUEST";
 
-	@Component
+	@Render
 	@Validate(required = true)
 	@Column(name = "resource_name")
 	private String name;
 
-	@Component
+	@Render
 	@Validate(required = true, unique = true)
 	@Column(name = "resource_key")
 	private String key;
 
-	@Component(type = Component.SELECT, text = { "菜单", "请求" }, value = { "MENU", "REQUEST" })
+	@Render(type = Render.SELECT, text = { "菜单", "请求" }, value = { "MENU", "REQUEST" })
 	@Validate(required = true)
 	@Column(name = "resource_type")
 	private String type;
 
-	@Component(type = Component.SELECT, url = "getParentResource.do", text = "name", value = "id")
+	@Render(type = Render.SELECT, url = "getParentResource.do", text = "name", value = "id")
 	@Validate(required = true)
 	@Column(name = "parent_id")
 	private Long parentId;
 
-	@Component
+	@Render
 	@Validate(required = true, unique = true)
 	@Column(name = "resource_url")
 	private String url;
 
-	@Component(type = Component.SELECTOR, url = "role/getAll.do")
+	@Render(type = Render.SELECTOR, url = "role/getAll.do")
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinTable(name = "sys_resource_role", joinColumns = { @JoinColumn(name = "resource_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	private List<SysRole> roles;

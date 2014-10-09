@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Component {
+public @interface Render {
 
 	public static final String INPUT = "INPUT";
 
